@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, '../dist/index.html'));
   });
 }
+app.use(express.static(path.join(__dirname, '../public/index.html')))
 app.use(cors())
 app.options('*', cors())
 app.use(express.json())
