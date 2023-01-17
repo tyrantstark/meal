@@ -4,25 +4,24 @@ const express=require('express');
 const app=express();
 const port=process.env.PORT;
 require('./mongoose');
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/./dist'))
-
-
-
-  app.get('/.*/', (req, res) => {
-      res.sendFile(__dirname + '/./dist/index.html');
+const history = require('connect-history-api-fallback')
+const cors = require('cors')
+app.use(history({
+  disableDotRule: true,
+  verbose: true,
+  htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
+}))
+const NODE_ENV='production';
+if (NODE_ENV === "production") {
+  // static folder
+  app.use(express.static("../dist"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
   });
-
-}else {
-  app.use(express.static(path.join(__dirname, '../public')))
-  app.get('/.*/', (req, res) => {
-      res.sendFile(path.join(__dirname, '../public/index.html'));
-  });
-
-
 }
-
+app.use(cors())
+app.options('*', cors())
+app.use(express.json())
 
 app.listen(port,()=>{
   console.log(`server running on ${port}`);
