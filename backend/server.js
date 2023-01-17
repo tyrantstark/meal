@@ -6,11 +6,7 @@ const port=process.env.PORT;
 require('./mongoose');
 const history = require('connect-history-api-fallback')
 const cors = require('cors')
-app.use(history({
-  disableDotRule: true,
-  verbose: true,
-  htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
-}))
+
 const NODE_ENV='production';
 if (NODE_ENV === "production") {
   // static folder
