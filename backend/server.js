@@ -7,8 +7,8 @@ require('./mongoose');
 const history = require('connect-history-api-fallback')
 const cors = require('cors')
 
-const NODE_ENV='production';
-if (NODE_ENV === "production") {
+//const NODE_ENV='production';
+if (process.env.NODE_ENV === "production") {
   // static folder
   app.use(express.static("../dist"));
   app.get("*", (req, res) => {
